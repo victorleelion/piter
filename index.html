@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#172a3a">
+  <meta name="description" content="Семейный маршрут по Санкт-Петербургу 13–18 июля 2026 года с маршрутами, погодой и советами.">
+  <title>Путешествие в Санкт-Петербург · 13–18 июля 2026</title>
+  <style>
+    :root {
+      --ink: #2d211b;
+      --muted: #796b60;
+      --paper: #f3ead7;
+      --card: rgba(255,252,244,.94);
+      --navy: #35141d;
+      --blue: #6f1f32;
+      --sky: #ead8b8;
+      --gold: #ba8730;
+      --gold-light: #e7c979;
+      --coral: #8f2f42;
+      --green: #65714c;
+      --line: rgba(92,55,27,.17);
+      --shadow: 0 20px 52px rgba(64,31,20,.14);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(rgba(186,135,48,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(186,135,48,.035) 1px, transparent 1px),
+        radial-gradient(circle at 15% 0%, rgba(231,201,121,.2), transparent 32rem),
+        linear-gradient(180deg, #fbf6ea 0%, var(--paper) 100%);
+      background-size: 32px 32px, 32px 32px, auto, auto;
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .shell { width: min(1160px, calc(100% - 32px)); margin: 0 auto; }
+    .skip { position: absolute; left: -9999px; }
+    .skip:focus { left: 16px; top: 16px; z-index: 100; padding: 10px 14px; background: white; border-radius: 10px; }
+
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(249,243,229,.92);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+    .nav { min-height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 850; text-decoration: none; letter-spacing: -.02em; }
+    .brand-mark { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--gold); border-radius: 50%; color: var(--gold-light); background: var(--navy); box-shadow: inset 0 0 0 3px rgba(231,201,121,.12); }
+    nav { display: flex; align-items: center; gap: 6px; }
+    nav a { padding: 9px 12px; border-radius: 999px; color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 700; }
+    nav a:hover, nav a.active { color: white; background: var(--navy); }
+    .menu-btn { display: none; border: 0; border-radius: 12px; background: white; padding: 9px 12px; font-weight: 800; box-shadow: 0 5px 18px rgba(0,0,0,.08); }
+
+    .hero { position: relative; overflow: hidden; min-height: 720px; display: flex; align-items: flex-end; padding: 120px 0 78px; color: #fff8e9; background-image: linear-gradient(90deg, rgba(8,24,40,.96) 0%, rgba(8,24,40,.82) 38%, rgba(8,24,40,.38) 68%, rgba(8,24,40,.16) 100%), linear-gradient(0deg, rgba(7,20,33,.82), transparent 56%), url('https://commons.wikimedia.org/wiki/Special:FilePath/Winter_Palace_Panorama_2.jpg?width=2200'); background-size: cover; background-position: center; border-bottom: 4px solid var(--gold); }
+    .hero::before, .hero::after { content: ""; position: absolute; border-radius: 50%; opacity: .16; }
+    .hero::before { width: 520px; height: 520px; right: -170px; top: -270px; border: 1px solid var(--gold-light); box-shadow: 0 0 0 28px rgba(231,201,121,.05), 0 0 0 58px rgba(231,201,121,.025); }
+    .hero::after { content: ""; position: absolute; left: 6.5%; right: 6.5%; top: 45px; width: auto; height: 1px; border-radius: 0; border: 0; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: .9; }
+    .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.25fr .75fr; gap: 48px; align-items: end; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px; padding: 8px 14px; border: 1px solid rgba(231,201,121,.48); border-radius: 2px; color: var(--gold-light); background: rgba(42,17,24,.24); font-family: Georgia, serif; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .eyebrow::before, .eyebrow::after { content: "◆"; font-size: 8px; }
+    h1 { max-width: 780px; margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(48px, 7vw, 84px); line-height: .98; font-weight: 500; letter-spacing: -.035em; text-shadow: 0 3px 20px rgba(0,0,0,.24); }
+    h1::after { content: "✦  ·  ✦"; display: block; margin-top: 22px; color: var(--gold-light); font-size: 17px; letter-spacing: .35em; text-shadow: none; }
+    .hero p { max-width: 660px; margin: 22px 0 0; color: rgba(255,255,255,.86); font-size: 20px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 11px 15px; border: 1px solid transparent; border-radius: 13px; font-size: 14px; font-weight: 800; text-decoration: none; cursor: pointer; transition: transform .18s, box-shadow .18s, background .18s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { color: #35141d; border-color: #f1d99b; background: linear-gradient(180deg, #f5dfa7, #d5a94f); box-shadow: 0 10px 26px rgba(0,0,0,.16); }
+    .btn-ghost { color: white; border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.08); }
+    .btn-dark { color: white; background: var(--navy); }
+    .btn-soft { color: var(--blue); border-color: rgba(34,92,120,.16); background: #edf6f7; }
+    .trip-card { position: relative; padding: 27px; border: 1px solid rgba(231,201,121,.55); border-radius: 4px; background: rgba(42,17,24,.34); box-shadow: inset 0 0 0 4px rgba(231,201,121,.07); backdrop-filter: blur(12px); }
+    .trip-card::before, .trip-card::after { content: "❦"; position: absolute; color: var(--gold-light); font-family: Georgia, serif; font-size: 18px; }
+    .trip-card::before { top: 7px; left: 10px; }
+    .trip-card::after { right: 10px; bottom: 7px; transform: rotate(180deg); }
+    .trip-card strong { display: block; margin-bottom: 12px; font-size: 13px; text-transform: uppercase; letter-spacing: .09em; color: #f1d69f; }
+    .trip-row { display: grid; grid-template-columns: 28px 1fr; gap: 9px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.15); }
+    .trip-row:first-of-type { border-top: 0; }
+    .trip-row small { display: block; color: rgba(255,255,255,.64); }
+
+    section { padding: 66px 0; scroll-margin-top: 68px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+    .kicker { margin: 0 0 8px; color: var(--coral); font-family: Georgia, serif; font-size: 13px; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+    .kicker::before { content: "— "; color: var(--gold); }
+    h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(36px, 5vw, 54px); line-height: 1.05; font-weight: 500; letter-spacing: -.025em; color: #3f1721; }
+    .section-note { max-width: 470px; margin: 0; color: var(--muted); }
+
+    .home-card { display: grid; grid-template-columns: 1fr auto; gap: 22px; align-items: center; margin-top: -24px; padding: 22px; border: 1px solid rgba(186,135,48,.48); border-radius: var(--radius); background: #fffaf0; box-shadow: var(--shadow), inset 0 0 0 4px #f6ead0; position: relative; z-index: 2; }
+    .home-title { display: flex; align-items: center; gap: 12px; }
+    .pin { display: grid; place-items: center; width: 48px; height: 48px; flex: 0 0 auto; border: 1px solid #d7b86d; border-radius: 50%; background: #f4e4bf; font-size: 22px; }
+    .home-card h3 { margin: 0; font-size: 19px; }
+    .home-card p { margin: 3px 0 0; color: var(--muted); font-size: 14px; }
+    .home-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .weather-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .weather { min-height: 165px; padding: 18px; border: 1px solid rgba(186,135,48,.3); border-radius: 8px; background: var(--card); box-shadow: inset 0 0 0 3px rgba(186,135,48,.05); }
+    .weather.today { color: #fff8e9; border-color: #b98736; background: linear-gradient(145deg, #4b1724, #76283a); }
+    .weather .date { font-weight: 900; }
+    .weather .icon { display: block; margin: 12px 0 6px; font-size: 29px; }
+    .weather .temp { font-size: 22px; font-weight: 900; }
+    .weather p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .weather.today p { color: rgba(255,255,255,.75); }
+
+    .day-list { display: grid; gap: 18px; }
+    .date-switcher { display: grid; grid-template-columns: repeat(6, 1fr); overflow: hidden; margin: 0 0 24px; border: 1px solid #d7c9ad; border-radius: 18px; background: rgba(255,255,255,.7); box-shadow: 0 10px 30px rgba(64,31,20,.06); }
+    .date-tab { min-height: 116px; padding: 18px 12px; border: 0; border-right: 1px solid #ddd2bd; color: #6e7d88; background: transparent; font: inherit; cursor: pointer; transition: color .2s, background .2s, transform .2s; }
+    .date-tab:last-child { border-right: 0; }
+    .date-tab:hover { color: var(--navy); background: #fbf5e8; }
+    .date-tab span { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 850; letter-spacing: .14em; text-transform: uppercase; }
+    .date-tab strong { display: block; color: #13283a; font-size: 17px; font-weight: 900; }
+    .date-tab.active { color: var(--gold-light); background: #091f32; box-shadow: inset 0 -4px 0 var(--gold); }
+    .date-tab.active strong { color: #fff; }
+    .date-tab:focus-visible { position: relative; z-index: 2; outline: 3px solid var(--gold); outline-offset: -3px; }
+    .day-card { display: none; overflow: hidden; border: 1px solid rgba(151,104,37,.28); border-radius: 10px; background: var(--card); box-shadow: 0 10px 30px rgba(64,31,20,.08), inset 0 0 0 3px rgba(186,135,48,.045); animation: revealDay .32s ease both; }
+    .day-card.active-day { display: block; }
+    @keyframes revealDay { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .day-visual { position: relative; min-height: 280px; overflow: hidden; color: #fff; background-color: #1a2630; background-image: linear-gradient(90deg, rgba(7,20,33,.86), rgba(7,20,33,.24) 72%), linear-gradient(0deg, rgba(7,20,33,.78), transparent 58%), var(--photo); background-size: cover; background-position: center; }
+    .day-visual::after { content: ""; position: absolute; inset: 14px; border: 1px solid rgba(231,201,121,.5); pointer-events: none; }
+    .day-visual-label { position: absolute; z-index: 2; left: 42px; bottom: 34px; max-width: 70%; }
+    .day-visual-label small { display: block; margin-bottom: 8px; color: var(--gold-light); font-size: 12px; font-weight: 900; letter-spacing: .15em; text-transform: uppercase; }
+    .day-visual-label strong { display: block; font-family: Georgia, serif; font-size: clamp(28px, 4vw, 48px); font-weight: 500; line-height: 1.04; text-shadow: 0 2px 16px rgba(0,0,0,.3); }
+    .day-credit { position: absolute; z-index: 2; right: 28px; bottom: 23px; color: rgba(255,255,255,.62); font-size: 10px; text-decoration: none; }
+    .day-top { display: grid; grid-template-columns: 165px 1fr auto; gap: 22px; align-items: center; padding: 22px; cursor: pointer; }
+    .day-date { padding: 15px; border: 1px solid #c69844; border-radius: 4px; color: #fff7e6; background: linear-gradient(145deg, #3d1420, #6b2133); box-shadow: inset 0 0 0 3px rgba(231,201,121,.1); }
+    .day-date strong { display: block; font-size: 23px; }
+    .day-date small { color: rgba(255,255,255,.72); }
+    .day-summary h3 { margin: 0 0 5px; font-size: 21px; }
+    .day-summary p { margin: 0; color: var(--muted); }
+    .tagline { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+    .tag { display: inline-flex; align-items: center; gap: 5px; padding: 6px 9px; border: 1px solid #ddc99c; border-radius: 3px; background: #faf2df; color: #6f5430; font-size: 12px; font-weight: 850; }
+    .toggle { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #d5b46d; border-radius: 50%; color: #6f1f32; background: #fbf0d8; font-size: 19px; transition: transform .2s; }
+    .day-card.open .toggle { transform: rotate(45deg); }
+    .day-content { display: none; padding: 0 22px 22px; }
+    .day-card.open .day-content { display: block; }
+    .timeline { position: relative; margin: 4px 0 20px 82px; border-left: 2px solid #dce5e6; }
+    .stop { position: relative; padding: 2px 0 22px 28px; }
+    .stop:last-child { padding-bottom: 4px; }
+    .stop::before { content: "◆"; position: absolute; left: -9px; top: 1px; color: var(--coral); background: #fffaf0; font-size: 14px; line-height: 18px; }
+    .stop time { position: absolute; left: -82px; top: 0; width: 60px; color: var(--blue); font-weight: 900; }
+    .stop h4 { margin: 0 0 4px; font-size: 17px; }
+    .stop p { margin: 0; color: var(--muted); font-size: 14px; }
+    .stop-links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+    .mini { display: inline-flex; align-items: center; min-height: 34px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 10px; background: white; font-size: 12px; font-weight: 800; text-decoration: none; }
+    .transport { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 15px; border: 1px solid #dec99a; border-radius: 7px; background: #f8edd5; }
+    .transport div { padding: 5px; }
+    .transport strong { display: block; margin-bottom: 4px; }
+    .transport p { margin: 0; color: var(--muted); font-size: 13px; }
+    .transit-steps { margin: 9px 0 0; padding: 0; list-style: none; counter-reset: routeStep; }
+    .transit-steps li { position: relative; min-height: 28px; padding: 3px 0 7px 31px; color: var(--muted); font-size: 13px; }
+    .transit-steps li::before { counter-increment: routeStep; content: counter(routeStep); position: absolute; left: 0; top: 1px; display: grid; place-items: center; width: 22px; height: 22px; border: 1px solid #c89a45; border-radius: 50%; color: #6f1f32; background: #fff9eb; font-size: 11px; font-weight: 900; }
+    .route-number { display: inline-grid; min-width: 25px; height: 22px; place-items: center; margin: 0 2px; padding: 0 6px; border-radius: 5px; color: white; background: #163b5a; font-size: 12px; font-weight: 900; }
+    .metro-line { display: inline-flex; align-items: center; gap: 5px; font-weight: 850; color: #3c4a55; }
+    .metro-line::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #26924d; box-shadow: 0 0 0 2px white, 0 0 0 3px #26924d; }
+    .best { color: var(--green); }
+    .warning { color: #a8563f; }
+    .day-route { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+    .places-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .place { display: grid; grid-template-columns: 52px 1fr; gap: 14px; padding: 18px; border: 1px solid rgba(186,135,48,.32); border-radius: 8px; background: #fffbf2; box-shadow: inset 0 0 0 3px rgba(186,135,48,.04); }
+    .place-icon { display: grid; place-items: center; width: 52px; height: 52px; border: 1px solid #d7b66d; border-radius: 50%; background: #f5e7c6; font-size: 24px; }
+    .place h3 { margin: 0 0 4px; font-size: 17px; }
+    .place p { margin: 0 0 10px; color: var(--muted); font-size: 13px; }
+    .place-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+    .place-meta a { font-size: 12px; font-weight: 850; color: var(--blue); text-decoration: none; }
+
+    .tips { border-top: 1px solid #dac18a; border-bottom: 1px solid #dac18a; background: linear-gradient(180deg, #eadbbd, #f2e8d4); }
+    .tabbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .tab { padding: 10px 14px; border: 1px solid rgba(111,31,50,.22); border-radius: 3px; color: var(--muted); background: rgba(255,250,240,.72); font-family: Georgia, serif; font-weight: 800; cursor: pointer; }
+    .tab.active { color: white; background: var(--navy); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .tip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+    .tip-card { padding: 20px; border: 1px solid rgba(151,104,37,.28); border-radius: 7px; background: rgba(255,251,242,.9); box-shadow: inset 0 0 0 3px rgba(186,135,48,.045); }
+    .tip-card h3 { margin: 0 0 8px; font-size: 17px; }
+    .tip-card p { margin: 0 0 12px; color: var(--muted); font-size: 13px; }
+    .tip-card a { color: var(--blue); font-size: 13px; font-weight: 850; text-decoration: none; }
+    .transport-home { display: grid; grid-template-columns: 1.05fr .95fr; gap: 16px; }
+    .transport-panel { padding: 22px; border: 1px solid rgba(151,104,37,.28); border-radius: 8px; background: rgba(255,251,242,.92); }
+    .transport-panel h3 { margin: 0 0 7px; font-family: Georgia, serif; font-size: 22px; color: #431725; }
+    .transport-panel > p { margin: 0 0 14px; color: var(--muted); font-size: 13px; }
+    .transit-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .transit-table th, .transit-table td { padding: 11px 10px; border-bottom: 1px solid #e1d5be; text-align: left; vertical-align: top; }
+    .transit-table th { color: #6f1f32; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+    .transit-table tr:last-child td { border-bottom: 0; }
+    .nearby-routes { display: grid; gap: 9px; }
+    .nearby-route { display: grid; grid-template-columns: 44px 1fr; gap: 10px; align-items: start; padding: 10px; border: 1px solid #e0d2b8; border-radius: 7px; background: white; }
+    .nearby-route b { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 8px; color: white; background: #153b5b; font-size: 16px; }
+    .nearby-route strong { display: block; margin-bottom: 2px; }
+    .nearby-route span { color: var(--muted); font-size: 12px; }
+    .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .check { display: flex; align-items: flex-start; gap: 10px; padding: 13px; border-radius: 15px; background: white; }
+    .check input { margin-top: 4px; accent-color: var(--green); }
+    .check span { font-size: 14px; }
+
+    .notice { display: grid; grid-template-columns: auto 1fr; gap: 14px; margin-top: 22px; padding: 17px; border-left: 4px solid var(--gold); border-radius: 13px; background: #fff8e9; }
+    .notice strong { display: block; margin-bottom: 2px; }
+    .notice p { margin: 0; color: var(--muted); font-size: 13px; }
+    .source-list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .source-list a { padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: white; color: var(--blue); font-size: 12px; font-weight: 800; text-decoration: none; }
+
+    footer { padding: 38px 0 48px; color: rgba(255,248,233,.72); border-top: 5px solid var(--gold); background: linear-gradient(130deg, #2b1118, #531a29); }
+    .footer-grid { display: flex; justify-content: space-between; gap: 24px; align-items: center; }
+    footer strong { color: white; }
+    footer p { margin: 5px 0 0; font-size: 13px; }
+    footer a { color: white; }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .trip-card { max-width: 600px; }
+      .weather-grid { grid-template-columns: repeat(3, 1fr); }
+      .tip-grid { grid-template-columns: repeat(2, 1fr); }
+      .day-top { grid-template-columns: 145px 1fr auto; }
+      .date-switcher { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; border-radius: 14px; }
+      .date-tab { min-width: 150px; min-height: 100px; flex: 0 0 150px; scroll-snap-align: start; }
+    }
+    @media (max-width: 680px) {
+      .shell { width: min(100% - 22px, 1160px); }
+      .menu-btn { display: block; }
+      nav { display: none; position: absolute; top: 62px; left: 11px; right: 11px; padding: 10px; flex-direction: column; align-items: stretch; border: 1px solid var(--line); border-radius: 16px; background: #fbf9f4; box-shadow: var(--shadow); }
+      nav.open { display: flex; }
+      nav a { text-align: center; }
+      .hero { min-height: 650px; padding-top: 80px; background-position: 62% center; }
+      .hero-grid { gap: 30px; }
+      .home-card { grid-template-columns: 1fr; }
+      .section-head { display: block; }
+      .section-note { margin-top: 10px; }
+      .weather-grid { grid-template-columns: repeat(2, 1fr); }
+      .day-top { grid-template-columns: 1fr auto; gap: 12px; }
+      .day-visual { min-height: 220px; }
+      .day-visual-label { left: 28px; right: 28px; bottom: 30px; max-width: none; }
+      .day-credit { display: none; }
+      .day-date { grid-column: 1 / -1; }
+      .timeline { margin-left: 68px; }
+      .stop time { left: -68px; }
+      .transport, .places-grid, .tip-grid, .checklist, .transport-home { grid-template-columns: 1fr; }
+      .transit-table thead { display: none; }
+      .transit-table, .transit-table tbody, .transit-table tr, .transit-table td { display: block; width: 100%; }
+      .transit-table tr { padding: 9px 0; border-bottom: 1px solid #e1d5be; }
+      .transit-table td { padding: 3px 0; border: 0; }
+      .footer-grid { display: block; }
+      footer .btn { margin-top: 16px; }
+    }
+    @media print {
+      header, .hero-actions, .toggle, .tabbar, footer { display: none !important; }
+      body { background: white; }
+      .hero { padding: 30px 0; color: #111; background: white; }
+      .hero p { color: #444; }
+      .trip-card { color: #111; border-color: #ccc; }
+      .trip-row small { color: #555; }
+      section { padding: 28px 0; }
+      .date-switcher { display: none !important; }
+      .day-content, .tab-panel { display: block !important; }
+      .day-card { display: block !important; break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#program">Перейти к программе</a>
+  <header>
+    <div class="shell nav">
+      <a class="brand" href="#top"><span class="brand-mark">♛</span><span>Императорский Петербург</span></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="main-nav">Меню</button>
+      <nav id="main-nav" aria-label="Главное меню">
+        <a href="#program">Маршрут</a>
+        <a href="#places">10 мест</a>
+        <a href="#weather">Погода</a>
+        <a href="#tips">Советы</a>
+        <a href="#sources">Билеты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <span class="eyebrow">Семейное путешествие · 13–18 июля</span>
+          <h1>Императорский Петербург</h1>
+          <p>Семейное путешествие из дома на Васильевском острове: дворцы, музеи, Кронштадт и маршруты без лишних переездов.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#program">Открыть программу ↓</a>
+            <a class="btn btn-ghost" href="https://yandex.ru/navi?whatshere%5Bpoint%5D=30.263093215921202%2C59.94410112888438&whatshere%5Bzoom%5D=19.977837&ll=30.263093215921202%2C59.9441011285229&z=19.977837&si=nvvjbtc59d40dhbnj2bbfh2eqr" target="_blank" rel="noopener">Дом в Яндекс Картах ↗</a>
+          </div>
+        </div>
+        <aside class="trip-card" aria-label="Кратко о поездке">
+          <strong>Путевой лист</strong>
+          <div class="trip-row"><span>🏠</span><div>Малый проспект В. О., 45<small>старт и возвращение каждый день</small></div></div>
+          <div class="trip-row"><span>🚗</span><div>Машина — для пригородов<small>Кронштадт, Ораниенбаум, Пушкин</small></div></div>
+          <div class="trip-row"><span>🚇</span><div>Транспорт — для центра<small>быстрее и проще, чем искать парковку</small></div></div>
+          <div class="trip-row"><span>🛥️</span><div>Лодка по Неве — 14 июля, 12:00<small>посадка: наб. реки Мойки, 56 · быть к 11:30</small></div></div>
+          <div class="trip-row"><span>🕓</span><div>Прибытие 13 июля после 16:00<small>отъезд 18 июля около полудня</small></div></div>
+        </aside>
+      </div>
+    </div>
+
+    <div class="shell home-card">
+      <div class="home-title">
+        <div class="pin">📍</div>
+        <div><h3>Наша точка старта</h3><p>Малый проспект Васильевского острова, 45, Санкт-Петербург</p></div>
+      </div>
+      <div class="home-actions">
+        <a class="btn btn-dark" href="https://yandex.ru/maps/?rtext=59.944101,30.263093&rtt=auto" target="_blank" rel="noopener">Маршрут домой</a>
+        <a class="btn btn-soft" href="https://yandex.ru/maps/?rtext=59.944101,30.263093&rtt=mt" target="_blank" rel="noopener">Общественный транспорт</a>
+      </div>
+    </div>
+
+    <section id="weather">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="kicker">Прогноз на 11 июля</p><h2>Погода по дням</h2></div>
+          <p class="section-note">Прогноз меняется. Проверяйте его утром каждого дня; для парков и пригородов возьмите лёгкий дождевик.</p>
+        </div>
+        <div class="weather-grid">
+          <article class="weather today"><div class="date">Пн, 13.07</div><span class="icon">🌦️</span><div class="temp">+16…+27°</div><p>Дождь утром, затем солнце</p></article>
+          <article class="weather"><div class="date">Вт, 14.07</div><span class="icon">🌤️</span><div class="temp">+16…+23°</div><p>Облака и солнце</p></article>
+          <article class="weather"><div class="date">Ср, 15.07</div><span class="icon">☁️</span><div class="temp">+16…+26°</div><p>Преимущественно облачно</p></article>
+          <article class="weather"><div class="date">Чт, 16.07</div><span class="icon">🌤️</span><div class="temp">+15…+23°</div><p>Солнечно с облаками</p></article>
+          <article class="weather"><div class="date">Пт, 17.07</div><span class="icon">☀️</span><div class="temp">+15…+25°</div><p>В основном солнечно</p></article>
+          <article class="weather"><div class="date">Сб, 18.07</div><span class="icon">🌤️</span><div class="temp">+18…+29°</div><p>Тепло, переменная облачность</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="program">
+      <div class="shell">
+        <div class="section-head">
+          <div><p class="kicker">Маршрут без спешки</p><h2>Программа 13–18 июля</h2></div>
+          <p class="section-note">Время в пути ориентировочное. Перед выездом откройте кнопку маршрута: Яндекс пересчитает пробки и общественный транспорт.</p>
+        </div>
+        <div class="date-switcher" role="tablist" aria-label="Выбор дня путешествия">
+          <button class="date-tab active" id="date-13" type="button" role="tab" aria-selected="true" aria-controls="day-13" data-day-target="day-13"><span>Пн</span><strong>13 июля</strong></button>
+          <button class="date-tab" id="date-14" type="button" role="tab" aria-selected="false" aria-controls="day-14" data-day-target="day-14"><span>Вт</span><strong>14 июля</strong></button>
+          <button class="date-tab" id="date-15" type="button" role="tab" aria-selected="false" aria-controls="day-15" data-day-target="day-15"><span>Ср</span><strong>15 июля</strong></button>
+          <button class="date-tab" id="date-16" type="button" role="tab" aria-selected="false" aria-controls="day-16" data-day-target="day-16"><span>Чт</span><strong>16 июля</strong></button>
+          <button class="date-tab" id="date-17" type="button" role="tab" aria-selected="false" aria-controls="day-17" data-day-target="day-17"><span>Пт</span><strong>17 июля</strong></button>
+          <button class="date-tab" id="date-18" type="button" role="tab" aria-selected="false" aria-controls="day-18" data-day-target="day-18"><span>Сб</span><strong>18 июля</strong></button>
+        </div>
+        <div class="day-list">
+
+          <article class="day-card open active-day" id="day-13" role="tabpanel" aria-labelledby="date-13">
+            <div class="day-visual" style="--photo:url('https://commons.wikimedia.org/wiki/Special:FilePath/Panorama_of_Saint_Petersburg_from_Palace_Bridge.jpg?width=1800')">
+              <div class="day-visual-label"><small>День первый · Васильевский остров</small><strong>Петербург начинается с Невы</strong></div>
+              <a class="day-credit" href="https://commons.wikimedia.org/wiki/File:Panorama_of_Saint_Petersburg_from_Palace_Bridge.jpg" target="_blank" rel="noopener">Фото: Panther / Wikimedia Commons</a>
+            </div>
+            <div class="day-top" role="button" tabindex="0" aria-expanded="true">
+              <div class="day-date"><strong>13 июля</strong><small>понедельник · после прибытия</small></div>
+              <div class="day-summary"><h3>Васильевский остров — мягкий старт</h3><p>Заселение, музей «Эпохи» и вечерняя Стрелка В. О.</p><div class="tagline"><span class="tag">🌦️ +27°</span><span class="tag">🚕 такси / автобус</span><span class="tag">📍 рядом с домом</span></div></div>
+              <button class="toggle" aria-label="Свернуть день">+</button>
+            </div>
+            <div class="day-content">
+              <div class="timeline">
+                <div class="stop"><time>16:00</time><h4>Прибытие и заселение</h4><p>Оставьте машину у дома и отдохните после дороги.</p></div>
+                <div class="stop"><time>18:00</time><h4>Музей-макет Древнего мира «Эпохи»</h4><p>Биржевой пр., 2. Обычно открыт ежедневно 11:00–21:00; заложите 1,5–2 часа.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTuS60kR" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://epohimuseum.ru/" target="_blank" rel="noopener">Билеты</a></div></div>
+                <div class="stop"><time>20:00</time><h4>Стрелка В. О. и ужин</h4><p>Короткая прогулка после музея. Вечером у воды прохладнее — пригодится ветровка.</p></div>
+              </div>
+              <div class="transport"><div><strong class="best">✓ Лучше: автобус №24</strong><ol class="transit-steps"><li>Пройти 5–7 минут до остановки «14-я и 15-я линии В.О. / Средний проспект».</li><li>Сесть на автобус <span class="route-number">24</span> в сторону центра.</li><li>Выйти на остановке «Университет» и пройти 8–10 минут к Биржевому проезду, 2.</li></ol></div><div><strong>Обратно: троллейбус №9 или автобус</strong><ol class="transit-steps"><li>От Стрелки пройти к остановке «8-я и 9-я линии В.О. / Малый проспект».</li><li>Сесть на троллейбус <span class="route-number">9</span> в сторону улицы Кораблестроителей.</li><li>Выйти у «12-й и 13-й линий В.О.» и пройти к дому. При усталости — такси.</li></ol></div></div>
+              <div class="day-route"><a class="btn btn-dark" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.9448,30.3054&rtt=mt" target="_blank" rel="noopener">🚇 Маршрут от дома</a><a class="btn btn-soft" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.9448,30.3054~59.944101,30.263093&rtt=auto" target="_blank" rel="noopener">🚗 Круговой маршрут</a></div>
+            </div>
+          </article>
+
+          <article class="day-card open" id="day-14" role="tabpanel" aria-labelledby="date-14">
+            <div class="day-visual" style="--photo:url('https://commons.wikimedia.org/wiki/Special:FilePath/%D0%9A-3_%D0%B2_%D0%9C%D1%83%D0%B7%D0%B5%D0%B5_%D0%B1%D0%BE%D0%B5%D0%B2%D1%8B%D1%85_%D0%BA%D0%BE%D1%80%D0%B0%D0%B1%D0%BB%D0%B5%D0%B9_%D0%B8_%D0%BF%D0%BE%D0%B4%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D1%85_%D0%BB%D0%BE%D0%B4%D0%BE%D0%BA_%D0%B2_%D0%9A%D1%80%D0%BE%D0%BD%D1%88%D1%82%D0%B0%D0%B4%D1%82%D0%B5%2C_30_%D0%B8%D1%8E%D0%BB%D1%8F_2023_%D0%B3%D0%BE%D0%B4%D0%B0.jpg?width=1800')">
+              <div class="day-visual-label"><small>День второй · Кронштадт</small><strong>Морская слава России</strong></div>
+              <a class="day-credit" href="https://commons.wikimedia.org/wiki/File:%D0%9A-3_%D0%B2_%D0%9C%D1%83%D0%B7%D0%B5%D0%B5_%D0%B1%D0%BE%D0%B5%D0%B2%D1%8B%D1%85_%D0%BA%D0%BE%D1%80%D0%B0%D0%B1%D0%BB%D0%B5%D0%B9_%D0%B8_%D0%BF%D0%BE%D0%B4%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D1%85_%D0%BB%D0%BE%D0%B4%D0%BE%D0%BA_%D0%B2_%D0%9A%D1%80%D0%BE%D0%BD%D1%88%D1%82%D0%B0%D0%B4%D1%82%D0%B5%2C_30_%D0%B8%D1%8E%D0%BB%D1%8F_2023_%D0%B3%D0%BE%D0%B4%D0%B0.jpg" target="_blank" rel="noopener">Фото: Игорь Бобров / Wikimedia Commons</a>
+            </div>
+            <div class="day-top" role="button" tabindex="0" aria-expanded="true">
+              <div class="day-date"><strong>14 июля</strong><small>вторник · морская история</small></div>
+              <div class="day-summary"><h3>Прогулка по Неве → Кронштадт</h3><p>Лодка с набережной Мойки, обед и загородный выезд во второй половине дня.</p><div class="tagline"><span class="tag">🌤️ +23°</span><span class="tag">🛥️ 12:00–13:00</span><span class="tag">🚗 после прогулки</span></div></div>
+              <button class="toggle" aria-label="Свернуть день">+</button>
+            </div>
+            <div class="day-content">
+              <div class="timeline">
+                <div class="stop"><time>10:45</time><h4>Выезд к месту посадки без машины</h4><p>Езжайте на такси или общественном транспорте. Плановое прибытие на набережную Мойки, 56 — не позднее 11:30.</p></div>
+                <div class="stop"><time>11:30</time><h4>Посадка на лодку</h4><p>Набережная реки Мойки, 56. Найдите причал и представителя заранее; возьмите ветровку даже при тёплой погоде.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/?text=%D0%BD%D0%B0%D0%B1%D0%B5%D1%80%D0%B5%D0%B6%D0%BD%D0%B0%D1%8F%20%D1%80%D0%B5%D0%BA%D0%B8%20%D0%9C%D0%BE%D0%B9%D0%BA%D0%B8%2056%20%D0%A1%D0%B0%D0%BD%D0%BA%D1%82-%D0%9F%D0%B5%D1%82%D0%B5%D1%80%D0%B1%D1%83%D1%80%D0%B3" target="_blank" rel="noopener">Причал на карте</a></div></div>
+                <div class="stop"><time>12:00</time><h4>Прогулка по Неве на лодке</h4><p>Продолжительность — 1 час, до 13:00. Приходите заранее: опоздание может означать пропуск рейса.</p></div>
+                <div class="stop"><time>13:00</time><h4>Обед в центре</h4><p>Около 45–60 минут. После обеда возвращайтесь к дому за автомобилем.</p></div>
+                <div class="stop"><time>14:15</time><h4>Выезд из дома в Кронштадт</h4><p>Через ЗСД и КАД. Дорога ориентировочно 50–75 минут; ЗСД платный.</p></div>
+                <div class="stop"><time>15:30</time><h4>Музей Военно-морской славы России</h4><p>Цитадельское ш., 18. На музей и К‑3 останется около 2,5 часов. Рядом — парковки и парк «Остров фортов».</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTuSB0NU" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://mvms.ru/" target="_blank" rel="noopener">Официальный сайт</a></div></div>
+                <div class="stop"><time>18:00</time><h4>Остров фортов и возвращение</h4><p>Короткая прогулка по парку, затем выезд домой ориентировочно в 18:30.</p></div>
+              </div>
+              <div class="transport"><div><strong class="best">✓ К лодке: троллейбус №11</strong><ol class="transit-steps"><li>Пройти 8–12 минут к остановке «16-я и 17-я линии В.О. / Большой проспект».</li><li>Сесть на троллейбус <span class="route-number">11</span> в сторону центра через Дворцовый мост.</li><li>Выйти на остановке «Малая Морская / метро Адмиралтейская».</li><li>Пройти 8–10 минут до наб. реки Мойки, 56. Выйти из дома не позднее 10:45.</li></ol></div><div><strong class="best">✓ После обеда: своя машина</strong><ol class="transit-steps"><li>Вернуться домой троллейбусом <span class="route-number">11</span> в обратном направлении либо на такси.</li><li>В 14:15 выехать на машине через ЗСД и КАД в Кронштадт.</li><li>Парковаться у «Острова фортов» на Цитадельском шоссе.</li></ol></div></div>
+              <div class="day-route"><a class="btn btn-dark" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.9361,30.3186&rtt=mt" target="_blank" rel="noopener">🚇 Дом → Мойка, 56</a><a class="btn btn-soft" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.9897,29.7078~59.944101,30.263093&rtt=auto" target="_blank" rel="noopener">🚗 Дом → Кронштадт → дом</a><a class="btn btn-soft" href="https://whsd.ru/tarifyi-na-proezd/" target="_blank" rel="noopener">Тарифы ЗСД</a></div>
+            </div>
+          </article>
+
+          <article class="day-card open" id="day-15" role="tabpanel" aria-labelledby="date-15">
+            <div class="day-visual" style="--photo:url('https://commons.wikimedia.org/wiki/Special:FilePath/Grand_Menshikov_Palace.jpg?width=1800')">
+              <div class="day-visual-label"><small>День третий · Ораниенбаум</small><strong>Дворец у Финского залива</strong></div>
+              <a class="day-credit" href="https://commons.wikimedia.org/wiki/File:Grand_Menshikov_Palace.jpg" target="_blank" rel="noopener">Фото: Chezenatiko / Wikimedia Commons</a>
+            </div>
+            <div class="day-top" role="button" tabindex="0" aria-expanded="true">
+              <div class="day-date"><strong>15 июля</strong><small>среда · дворцы у залива</small></div>
+              <div class="day-summary"><h3>Ораниенбаум → Петропавловская крепость</h3><p>Дворец и парк утром, крепость по дороге обратно в город.</p><div class="tagline"><span class="tag">☁️ +26°</span><span class="tag">🚗 машина</span><span class="tag">🏰 два исторических комплекса</span></div></div>
+              <button class="toggle" aria-label="Свернуть день">+</button>
+            </div>
+            <div class="day-content">
+              <div class="timeline">
+                <div class="stop"><time>08:30</time><h4>Выезд в Ломоносов</h4><p>Ориентир — 55–85 минут через ЗСД/КАД; выезжайте с запасом.</p></div>
+                <div class="stop"><time>10:00</time><h4>Парк Ораниенбаум</h4><p>Небольшая прогулка перед посещением дворца.</p></div>
+                <div class="stop"><time>10:30</time><h4>Большой Меншиковский дворец</h4><p>Затем продолжите прогулку по главным аллеям парка. Не пытайтесь охватить все малые павильоны.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTu05TMx" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://peterhofmuseum.ru/objects/oranienbaum" target="_blank" rel="noopener">Билеты</a></div></div>
+                <div class="stop"><time>13:30</time><h4>Обед и выезд в Петербург</h4><p>На обед — около 45 минут. Выезжайте не позднее 14:15.</p></div>
+                <div class="stop"><time>15:45</time><h4>Петропавловская крепость</h4><p>Заложите около 2,5 часов. Выберите Петропавловский собор и Трубецкой бастион; территория крепости бесплатна.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTuSyR1k" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://www.spbmuseum.ru/" target="_blank" rel="noopener">Билеты и режим</a></div></div>
+                <div class="stop"><time>18:30</time><h4>Возвращение домой</h4><p>От крепости до Малого проспекта В. О. обычно 20–35 минут с учётом трафика.</p></div>
+              </div>
+              <div class="transport"><div><strong class="best">✓ Лучше: своя машина</strong><p>Она связывает Ораниенбаум и Петроградскую сторону без лишних пересадок.</p></div><div><strong>Важно по времени</strong><p>Если выезд из Ораниенбаума задержался после 14:30, сократите крепость до прогулки по территории и собора.</p></div></div>
+              <div class="day-route"><a class="btn btn-dark" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.9157,29.7538~59.9501,30.3160~59.944101,30.263093&rtt=auto" target="_blank" rel="noopener">🚗 Весь маршрут дня</a><a class="btn btn-soft" href="https://yandex.ru/maps/-/CTuSyR1k" target="_blank" rel="noopener">🏰 Петропавловская крепость</a></div>
+            </div>
+          </article>
+
+          <article class="day-card open" id="day-16" role="tabpanel" aria-labelledby="date-16">
+            <div class="day-visual" style="--photo:url('https://commons.wikimedia.org/wiki/Special:FilePath/RUS-2016-Pushkin-Catherine_Park-Catherine_Palace_(facade).jpg?width=1800')">
+              <div class="day-visual-label"><small>День четвёртый · Царское Село</small><strong>Золото императорской резиденции</strong></div>
+              <a class="day-credit" href="https://commons.wikimedia.org/wiki/File:RUS-2016-Pushkin-Catherine_Park-Catherine_Palace_(facade).jpg" target="_blank" rel="noopener">Фото: A. Savin / Wikimedia Commons</a>
+            </div>
+            <div class="day-top" role="button" tabindex="0" aria-expanded="true">
+              <div class="day-date"><strong>16 июля</strong><small>четверг · императорская резиденция</small></div>
+              <div class="day-summary"><h3>Царское Село: два дворца</h3><p>Екатерининский дворец утром, Александровский — после обеда.</p><div class="tagline"><span class="tag">🌤️ +23°</span><span class="tag">🚗 машина</span><span class="tag">🎟️ билеты заранее</span></div></div>
+              <button class="toggle" aria-label="Свернуть день">+</button>
+            </div>
+            <div class="day-content">
+              <div class="timeline">
+                <div class="stop"><time>08:15</time><h4>Выезд в Пушкин</h4><p>Дорога около 60–90 минут. Цель — припарковаться до основного потока туристов.</p></div>
+                <div class="stop"><time>10:00</time><h4>Екатерининский дворец и парк</h4><p>Садовая ул., 7. Берите билет с фиксированным временем и приезжайте минимум за 30 минут.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTuSRFkr" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://tzar.ru/visitors/workinhours/ekaterininsky_palace" target="_blank" rel="noopener">Билеты</a></div></div>
+                <div class="stop"><time>13:30</time><h4>Обед в Пушкине</h4><p>Заложите 60–75 минут и небольшой переход к Александровскому парку.</p></div>
+                <div class="stop"><time>15:00</time><h4>Александровский дворец</h4><p>Дворцовая ул., 2. Обычно 10:00–18:00, выходной — среда; вход до 17:00.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTu0BF5W" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://tzar.ru/visitors/workinhours/adm" target="_blank" rel="noopener">Билеты</a></div></div>
+                <div class="stop"><time>17:30</time><h4>Возвращение</h4><p>Домой ориентировочно к 19:00 с учётом вечернего трафика.</p></div>
+              </div>
+              <div class="transport"><div><strong class="best">✓ Лучше: своя машина</strong><p>Для семьи и двух дворцов удобнее всего. Официальная парковка у Екатерининского дворца — на Оранжерейной улице.</p></div><div><strong>Запасной вариант без машины</strong><ol class="transit-steps"><li>Пешком 12–15 минут до метро «Василеостровская».</li><li><span class="metro-line">Зелёная линия</span>: до «Гостиного двора», переход на «Невский проспект».</li><li><b>Синяя линия</b>: до «Купчино».</li><li>От «Купчино» — автобус <span class="route-number">186</span> до Пушкина, далее пешком или короткое такси к Екатерининскому дворцу.</li></ol></div></div>
+              <div class="day-route"><a class="btn btn-dark" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.7154,30.3956~59.7208,30.3923~59.944101,30.263093&rtt=auto" target="_blank" rel="noopener">🚗 Весь маршрут дня</a><a class="btn btn-soft" href="https://www.tzar.ru/services/parking" target="_blank" rel="noopener">Официальная парковка</a></div>
+            </div>
+          </article>
+
+          <article class="day-card open" id="day-17" role="tabpanel" aria-labelledby="date-17">
+            <div class="day-visual" style="--photo:url('https://commons.wikimedia.org/wiki/Special:FilePath/Winter_Palace_Panorama_2.jpg?width=1800')">
+              <div class="day-visual-label"><small>День пятый · Парадный центр</small><strong>Сердце Императорского Петербурга</strong></div>
+              <a class="day-credit" href="https://commons.wikimedia.org/wiki/File:Winter_Palace_Panorama_2.jpg" target="_blank" rel="noopener">Фото: Florstein / Wikimedia Commons</a>
+            </div>
+            <div class="day-top" role="button" tabindex="0" aria-expanded="true">
+              <div class="day-date"><strong>17 июля</strong><small>пятница · парадный центр</small></div>
+              <div class="day-summary"><h3>Эрмитаж → Юсуповский дворец → Исаакий</h3><p>Три главных объекта пешком и на коротких поездках без машины.</p><div class="tagline"><span class="tag">☀️ +25°</span><span class="tag">🚇 транспорт</span><span class="tag">🚶 5–7 км пешком</span></div></div>
+              <button class="toggle" aria-label="Свернуть день">+</button>
+            </div>
+            <div class="day-content">
+              <div class="timeline">
+                <div class="stop"><time>10:00</time><h4>Выезд из дома</h4><p>Такси/автобус до Дворцовой площади. В центре машина будет мешать больше, чем помогать.</p></div>
+                <div class="stop"><time>11:00</time><h4>Государственный Эрмитаж</h4><p>Дворцовая пл., 2. Выберите заранее маршрут и временной слот; на основную экспозицию — 3 часа.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTuSuINw" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://www.hermitagemuseum.org/visitus" target="_blank" rel="noopener">Официальные билеты</a></div></div>
+                <div class="stop"><time>14:15</time><h4>Обед</h4><p>Не менее 60 минут. Затем короткое такси или прогулка к Мойке, 94.</p></div>
+                <div class="stop"><time>16:00</time><h4>Юсуповский дворец</h4><p>Парадные залы — примерно 1 час 15 минут. Последний сеанс обычно в 18:00.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTuSb4Kh" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://yusupov-palace.ru/ru/programs" target="_blank" rel="noopener">Экскурсии</a></div></div>
+                <div class="stop"><time>18:00</time><h4>Исаакиевский собор и колоннада</h4><p>Летом действует вечернее посещение до 21:30, кроме среды. На колоннаду — 262 ступени.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/-/CTuSuG~-" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://cathedral.ru/ru/visitors/time" target="_blank" rel="noopener">Режим и билеты</a></div></div>
+              </div>
+              <div class="transport"><div><strong class="best">✓ До Эрмитажа: троллейбус №11</strong><ol class="transit-steps"><li>Пройти к остановке «16-я и 17-я линии В.О. / Большой проспект».</li><li>Сесть на троллейбус <span class="route-number">11</span> в направлении центра.</li><li>Выйти на остановке «Дворцовая площадь» — Эрмитаж рядом.</li><li>Между Эрмитажем, Юсуповским дворцом и Исаакием — пешком или короткое такси.</li></ol></div><div><strong>Обратно от Исаакия</strong><ol class="transit-steps"><li>Пройти к остановке «Малая Морская / метро Адмиралтейская».</li><li>Сесть на троллейбус <span class="route-number">11</span> в сторону Васильевского острова.</li><li>Выйти на «16-й и 17-й линиях В.О.» и пройти 8–12 минут до дома.</li></ol></div></div>
+              <div class="day-route"><a class="btn btn-dark" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.9401,30.3138&rtt=mt" target="_blank" rel="noopener">🚇 Дом → Эрмитаж</a><a class="btn btn-soft" href="https://yandex.ru/maps/?rtext=59.9401,30.3138~59.9296,30.2990~59.9341,30.3061&rtt=pd" target="_blank" rel="noopener">🚶 Маршрут по центру</a><a class="btn btn-soft" href="https://yandex.ru/maps/?rtext=59.9341,30.3061~59.944101,30.263093&rtt=mt" target="_blank" rel="noopener">🏠 Исаакий → дом</a></div>
+            </div>
+          </article>
+
+          <article class="day-card open" id="day-18" role="tabpanel" aria-labelledby="date-18">
+            <div class="day-visual" style="--photo:url('https://commons.wikimedia.org/wiki/Special:FilePath/2018_SPb_Mikhailovsky_Palace_08.jpg?width=1800')">
+              <div class="day-visual-label"><small>День шестой · Русское искусство</small><strong>Финальный аккорд путешествия</strong></div>
+              <a class="day-credit" href="https://commons.wikimedia.org/wiki/File:2018_SPb_Mikhailovsky_Palace_08.jpg" target="_blank" rel="noopener">Фото: Andrey Korzun / Wikimedia Commons</a>
+            </div>
+            <div class="day-top" role="button" tabindex="0" aria-expanded="true">
+              <div class="day-date"><strong>18 июля</strong><small>суббота · отъезд в обед</small></div>
+              <div class="day-summary"><h3>Русский музей и выезд</h3><p>Последний музей без лишнего возвращения на Васильевский остров.</p><div class="tagline"><span class="tag">🌤️ +29°</span><span class="tag">🚗 с багажом</span><span class="tag">🕛 выезд около 12:15</span></div></div>
+              <button class="toggle" aria-label="Свернуть день">+</button>
+            </div>
+            <div class="day-content">
+              <div class="timeline">
+                <div class="stop"><time>08:30</time><h4>Завтрак, сборы и выезд из жилья</h4><p>Багаж сразу положите в автомобиль.</p></div>
+                <div class="stop"><time>09:20</time><h4>Переезд и парковка</h4><p>Ищите официальное платное место в районе площади Искусств; оплатите сразу.</p></div>
+                <div class="stop"><time>10:00</time><h4>Государственный Русский музей</h4><p>Михайловский дворец, Инженерная ул., 2–4Д. За 2 часа сосредоточьтесь на основной экспозиции.</p><div class="stop-links"><a class="mini" href="https://yandex.ru/maps/org/gosudarstvenny_russkiy_muzey/1094851452?si=10e9znneegf1fv05gwfynxa8ar" target="_blank" rel="noopener">Место на карте</a><a class="mini" href="https://ticket.rusmuseum.ru/" target="_blank" rel="noopener">Официальные билеты</a></div></div>
+                <div class="stop"><time>12:15</time><h4>Выезд из Санкт-Петербурга</h4><p>Маршрут стройте уже от парковки у музея к следующей точке поездки.</p></div>
+              </div>
+              <div class="transport"><div><strong class="best">✓ Машина — только из-за отъезда</strong><p>Не придётся возвращаться за багажом. В обычный день для Русского музея лучше метро.</p></div><div><strong>Как ехать без автомобиля</strong><ol class="transit-steps"><li>Пешком 12–15 минут до «Василеостровской».</li><li><span class="metro-line">Зелёная линия</span>: 1 остановка до «Гостиного двора».</li><li>Выйти на Невский проспект и пройти 10–12 минут через Михайловскую улицу к музею.</li></ol></div></div>
+              <div class="day-route"><a class="btn btn-dark" href="https://yandex.ru/maps/?rtext=59.944101,30.263093~59.9388,30.3324&rtt=auto" target="_blank" rel="noopener">🚗 Дом → Русский музей</a><a class="btn btn-soft" href="https://parking.spb.ru/" target="_blank" rel="noopener">Карта парковок</a></div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="places">
+      <div class="shell">
+        <div class="section-head"><div><p class="kicker">Все точки</p><h2>10 достопримечательностей</h2></div><p class="section-note">У каждой карточки есть исходная точка в Яндекс Картах и официальный сайт для проверки билетов.</p></div>
+        <div class="places-grid">
+          <article class="place"><div class="place-icon">🖼️</div><div><h3>Государственный Эрмитаж</h3><p>Дворцовая площадь, 2 · 17 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTuSuINw" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://www.hermitagemuseum.org/visitus" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">👑</div><div><h3>Александровский дворец</h3><p>Пушкин, Дворцовая ул., 2 · 16 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTu0BF5W" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://tzar.ru/visitors/workinhours/adm" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">🎨</div><div><h3>Государственный Русский музей</h3><p>Инженерная ул., 2–4Д · 18 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/org/gosudarstvenny_russkiy_muzey/1094851452" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://ticket.rusmuseum.ru/" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">🌳</div><div><h3>Ораниенбаум</h3><p>Ломоносов, Верхний парк · 15 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTu05TMx" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://peterhofmuseum.ru/objects/oranienbaum" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">⛪</div><div><h3>Исаакиевский собор</h3><p>Исаакиевская площадь, 4 · 17 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTuSuG~-" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://cathedral.ru/ru/visitors/time" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">🏺</div><div><h3>Музей-макет «Эпохи»</h3><p>Биржевой пр., 2 · 13 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTuS60kR" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://epohimuseum.ru/" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">🏰</div><div><h3>Петропавловская крепость</h3><p>Заячий остров · 15 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTuSyR1k" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://www.spbmuseum.ru/" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">🎭</div><div><h3>Юсуповский дворец</h3><p>наб. реки Мойки, 94 · 17 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTuSb4Kh" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://yusupov-palace.ru/ru/programs" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">⚓</div><div><h3>Музей Военно-морской славы</h3><p>Кронштадт, Цитадельское ш., 18 · 14 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTuSB0NU" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://mvms.ru/" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+          <article class="place"><div class="place-icon">✨</div><div><h3>Екатерининский дворец</h3><p>Пушкин, Садовая ул., 7 · 16 июля</p><div class="place-meta"><a href="https://yandex.ru/maps/-/CTuSRFkr" target="_blank" rel="noopener">Карта ↗</a> · <a href="https://tzar.ru/visitors/workinhours/ekaterininsky_palace" target="_blank" rel="noopener">Билеты ↗</a></div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="tips" class="tips">
+      <div class="shell">
+        <div class="section-head"><div><p class="kicker">Практично</p><h2>Советы</h2></div><p class="section-note">Кафе собраны по районам маршрута. Рейтинг, свободные столики и часы работы перепроверьте в день посещения.</p></div>
+        <div class="tabbar" role="tablist">
+          <button class="tab" role="tab" aria-selected="false" data-tab="public-transport">Транспорт от дома</button>
+          <button class="tab active" role="tab" aria-selected="true" data-tab="food">Рестораны и кафе</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="tickets">Билеты и экскурсии</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="car">Машина и парковки</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="pack">Что взять</button>
+        </div>
+
+        <div class="tab-panel" id="public-transport" role="tabpanel">
+          <div class="transport-home">
+            <article class="transport-panel">
+              <h3>Главная точка — «Василеостровская»</h3>
+              <p>Дом находится у пересечения Малого проспекта и 14–15-й линий. До метро около 12–15 минут пешком: выйти к Среднему проспекту и идти в сторону 6–7-й линий. Если не хочется идти, от ближайшей остановки можно проехать 2 остановки автобусами №100, №47 или №6А.</p>
+              <table class="transit-table">
+                <thead><tr><th>Куда</th><th>Как ехать</th><th>Выбор</th></tr></thead>
+                <tbody>
+                  <tr><td><b>Невский, Казанский собор</b></td><td>«Василеостровская» → 1 остановка до «Гостиного двора»</td><td>Метро</td></tr>
+                  <tr><td><b>Эрмитаж</b></td><td>Троллейбус <span class="route-number">11</span> до «Дворцовой площади»</td><td>№11</td></tr>
+                  <tr><td><b>Исаакиевский собор</b></td><td>Троллейбус <span class="route-number">11</span> до «Малой Морской / Адмиралтейской», далее 7–10 мин пешком</td><td>№11</td></tr>
+                  <tr><td><b>Новая Голландия, Мариинский театр</b></td><td>Троллейбус <span class="route-number">12</span> через Благовещенский мост до «Площади Труда», далее 7–15 мин пешком</td><td>№12</td></tr>
+                  <tr><td><b>Петропавловская крепость</b></td><td>«Василеостровская» → «Гостиный двор», переход на «Невский проспект» → «Горьковская», далее 10 мин пешком</td><td>Метро; с детьми — такси</td></tr>
+                  <tr><td><b>Московский вокзал</b></td><td>«Василеостровская» → «Маяковская», 2 остановки без пересадки</td><td>Метро</td></tr>
+                  <tr><td><b>Парк 300-летия</b></td><td>«Василеостровская» → «Беговая», 3 остановки, затем 15–20 мин пешком</td><td>Метро</td></tr>
+                  <tr><td><b>Севкабель Порт</b></td><td>Трамвай <span class="route-number">1</span> со Среднего проспекта в сторону Детской улицы, затем пешком; график может зависеть от дня недели</td><td>Такси/машина надёжнее</td></tr>
+                </tbody>
+              </table>
+            </article>
+            <article class="transport-panel">
+              <h3>Полезные маршруты рядом</h3>
+              <p>До посадки проверяйте направление на остановке: встречные остановки расположены на разных сторонах проспекта.</p>
+              <div class="nearby-routes">
+                <div class="nearby-route"><b>9</b><div><strong>Петроградская сторона</strong><span>Посадка: «12-я и 13-я линии В.О. / Малый проспект». Через 8–9-ю линии к «Спортивной» и «Петроградской».</span></div></div>
+                <div class="nearby-route"><b>10</b><div><strong>Центр и Невский проспект</strong><span>Посадка: «16-я и 17-я линии В.О. / Большой проспект». Через Дворцовую площадь, «Адмиралтейскую», «Гостиный двор» и «Площадь Восстания».</span></div></div>
+                <div class="nearby-route"><b>11</b><div><strong>Эрмитаж и Адмиралтейская</strong><span>Посадка: «16-я и 17-я линии В.О. / Большой проспект». Через Университетскую набережную и Дворцовый мост.</span></div></div>
+                <div class="nearby-route"><b>12</b><div><strong>Площадь Труда и Мариинский театр</strong><span>Посадка: «12-я и 13-я линии В.О. / Средний проспект». Через Благовещенский мост и площадь Труда.</span></div></div>
+              </div>
+              <div class="notice"><span>⚠️</span><div><strong>Проверяйте в день поездки</strong><p>В июле возможны временные изменения из-за дорожных работ и мероприятий. Нажмите «Общественный транспорт» в карточке дня — Яндекс покажет фактический маршрут и прибытие.</p></div></div>
+              <div class="stop-links"><a class="mini" href="https://electrotrans.spb.ru/izmeneniya_marshrutov" target="_blank" rel="noopener">Изменения маршрутов</a><a class="mini" href="https://yandex.ru/maps/2/saint-petersburg/transport/" target="_blank" rel="noopener">Транспорт онлайн</a></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="tab-panel active" id="food" role="tabpanel">
+          <div class="tip-grid">
+            <article class="tip-card"><h3>Васильевский остров</h3><p><b>Vasileostrovsky Market</b> — удобно для семьи: много кухонь в одном месте. <b>Erarta Restaurant</b> — спокойный ужин.</p><a href="https://yandex.ru/maps/?text=рестораны%20с%20высоким%20рейтингом%20Васильевский%20остров" target="_blank" rel="noopener">Проверить рейтинг на карте ↗</a></article>
+            <article class="tip-card"><h3>Эрмитаж и Исаакий</h3><p><b>«Тепло»</b> — домашняя атмосфера рядом с Исаакиевской площадью. <b>«Катюша»</b> — русская кухня у Дворцовой.</p><a href="https://yandex.ru/maps/?text=кафе%20высокий%20рейтинг%20Исаакиевская%20площадь" target="_blank" rel="noopener">Посмотреть варианты ↗</a></article>
+            <article class="tip-card"><h3>Юсуповский дворец</h3><p><b>«Садко»</b> у Театральной площади — русская кухня. Для быстрого обеда ищите кафе на улице Глинки.</p><a href="https://yandex.ru/maps/?text=рестораны%20рядом%20с%20Юсуповским%20дворцом" target="_blank" rel="noopener">Посмотреть варианты ↗</a></article>
+            <article class="tip-card"><h3>Кронштадт</h3><p><b>Old Kotlin</b> и <b>«Голландская кухня»</b> — популярные варианты в исторической части. На выходных лучше бронировать.</p><a href="https://yandex.ru/maps/?text=рестораны%20Кронштадт%20высокий%20рейтинг" target="_blank" rel="noopener">Проверить рейтинг ↗</a></article>
+            <article class="tip-card"><h3>Пушкин</h3><p><b>«Хлебниковъ»</b> — в центре Пушкина. <b>«ПхалиХинкали»</b> — понятный семейный вариант.</p><a href="https://yandex.ru/maps/?text=рестораны%20рядом%20с%20Екатерининским%20дворцом" target="_blank" rel="noopener">Посмотреть варианты ↗</a></article>
+            <article class="tip-card"><h3>Ораниенбаум</h3><p>Выбирайте кафе в центре Ломоносова до прогулки по парку; внутри комплекса выбор ограничен.</p><a href="https://yandex.ru/maps/?text=кафе%20Ломоносов%20Ораниенбаум%20высокий%20рейтинг" target="_blank" rel="noopener">Найти кафе ↗</a></article>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="tickets" role="tabpanel">
+          <div class="tip-grid">
+            <article class="tip-card"><h3>Покупать заранее</h3><p>Эрмитаж, Екатерининский и Александровский дворцы — только с выбранным временным слотом. Скриншоты билетов сохраните в телефон.</p><a href="#sources">Официальные ссылки ↓</a></article>
+            <article class="tip-card"><h3>Юсуповский дворец</h3><p>Самостоятельный маршрут по парадным залам занимает около 1 часа 15 минут. Последний сеанс — 18:00.</p><a href="https://yusupov-palace.ru/ru/programs" target="_blank" rel="noopener">Выбрать программу ↗</a></article>
+            <article class="tip-card"><h3>Кронштадт</h3><p>Добавьте экскурсию внутри атомной подводной лодки К‑3, если доступна на вашу дату; проверяйте возрастные ограничения.</p><a href="https://mvms.ru/" target="_blank" rel="noopener">Афиша музея ↗</a></article>
+            <article class="tip-card"><h3>Петропавловская крепость</h3><p>Если времени мало, выберите Петропавловский собор и Трубецкой бастион, а не единый маршрут по всем музеям.</p><a href="https://www.spbmuseum.ru/" target="_blank" rel="noopener">Официальный сайт ↗</a></article>
+            <article class="tip-card"><h3>Исаакиевский собор</h3><p>Колоннада — отдельный билет и 262 ступени. При дождливой или ветреной погоде оставьте только собор.</p><a href="https://cathedral.ru/ru/visitors/time" target="_blank" rel="noopener">Режим работы ↗</a></article>
+            <article class="tip-card"><h3>Ораниенбаум</h3><p>Большой Меншиковский дворец — главный объект. Некоторые малые павильоны продают билеты только в кассах и до 15:00.</p><a href="https://peterhofmuseum.ru/objects/oranienbaum" target="_blank" rel="noopener">Выбрать объекты ↗</a></article>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="car" role="tabpanel">
+          <div class="tip-grid">
+            <article class="tip-card"><h3>Центр — без машины</h3><p>Центральный, Адмиралтейский, Петроградский и часть Василеостровского района: парковка платная ежедневно 08:00–20:00.</p><a href="https://parking.spb.ru/" target="_blank" rel="noopener">Официальная карта ↗</a></article>
+            <article class="tip-card"><h3>Оплачивайте сразу</h3><p>Проверьте номер зоны на знаке и используйте приложение «Парковки Санкт‑Петербурга». Не полагайтесь на случайное свободное место.</p><a href="https://www.gov.spb.ru/gov/otrasl/c_transport/platnye-parkovki/granicy-zony-platnoj-parkovki/" target="_blank" rel="noopener">Правила ↗</a></article>
+            <article class="tip-card"><h3>ЗСД</h3><p>Для Кронштадта и Ораниенбаума платная магистраль экономит время. Стоимость зависит от въезда, выезда и способа оплаты.</p><a href="https://whsd.ru/tarifyi-na-proezd/" target="_blank" rel="noopener">Калькулятор и тарифы ↗</a></article>
+            <article class="tip-card"><h3>Царское Село</h3><p>Есть официальная платная стоянка на Оранжерейной улице и бесплатная стоянка у Александровского парка.</p><a href="https://www.tzar.ru/services/parking" target="_blank" rel="noopener">Схема парковок ↗</a></article>
+            <article class="tip-card"><h3>Кронштадт</h3><p>Оставляйте автомобиль у «Острова фортов», затем перемещайтесь по комплексу пешком. Приезжайте к открытию.</p><a href="https://yandex.ru/maps/?text=парковка%20Остров%20фортов" target="_blank" rel="noopener">Парковки на карте ↗</a></article>
+            <article class="tip-card"><h3>Перед каждым выездом</h3><p>Проверьте пробки, заряд телефона, топливо, платные участки и ограничения стоянки. Время сайта — ориентир, Яндекс — фактическая навигация.</p><a href="https://yandex.ru/maps/2/saint-petersburg/" target="_blank" rel="noopener">Открыть карту ↗</a></article>
+          </div>
+        </div>
+
+        <div class="tab-panel" id="pack" role="tabpanel">
+          <div class="checklist">
+            <label class="check"><input type="checkbox" data-save="tickets"><span><b>Билеты и документы</b><br>Сохранены офлайн и распределены по дням.</span></label>
+            <label class="check"><input type="checkbox" data-save="rain"><span><b>Дождевики</b><br>Компактные, по одному на человека.</span></label>
+            <label class="check"><input type="checkbox" data-save="power"><span><b>Пауэрбанк и кабель</b><br>Навигация быстро расходует заряд.</span></label>
+            <label class="check"><input type="checkbox" data-save="water"><span><b>Вода и перекус</b><br>Особенно для парков и поездки в Кронштадт.</span></label>
+            <label class="check"><input type="checkbox" data-save="shoes"><span><b>Удобная обувь</b><br>В дворцовые дни будет много ходьбы.</span></label>
+            <label class="check"><input type="checkbox" data-save="car"><span><b>Для автомобиля</b><br>Транспондер/карта, держатель телефона, зарядка.</span></label>
+          </div>
+        </div>
+
+        <div class="notice"><span>💡</span><div><strong>Что ещё можно добавить позже</strong><p>Семейный бюджет по дням, номера билетов, подтверждения брони ресторанов, точки туалетов и аптек, запасной маршрут на сильный дождь, а также кнопку «Поделиться» и QR‑код сайта.</p></div></div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="shell">
+        <div class="section-head"><div><p class="kicker">Проверено 11.07.2026</p><h2>Официальные источники</h2></div><p class="section-note">Перед оплатой обязательно сравните дату, время, адрес входа и возрастную категорию каждого билета.</p></div>
+        <div class="source-list">
+          <a href="https://www.hermitagemuseum.org/visitus" target="_blank" rel="noopener">Эрмитаж</a>
+          <a href="https://rusmuseum.ru/museums/mikhailovsky-palace/" target="_blank" rel="noopener">Русский музей</a>
+          <a href="https://tzar.ru/visitors/workinhours" target="_blank" rel="noopener">Царское Село</a>
+          <a href="https://peterhofmuseum.ru/objects/oranienbaum" target="_blank" rel="noopener">Ораниенбаум</a>
+          <a href="https://cathedral.ru/ru/visitors/time" target="_blank" rel="noopener">Исаакиевский собор</a>
+          <a href="https://www.spbmuseum.ru/" target="_blank" rel="noopener">Петропавловская крепость</a>
+          <a href="https://yusupov-palace.ru/ru" target="_blank" rel="noopener">Юсуповский дворец</a>
+          <a href="https://mvms.ru/" target="_blank" rel="noopener">Музей ВМ‑славы</a>
+          <a href="https://epohimuseum.ru/" target="_blank" rel="noopener">«Эпохи»</a>
+          <a href="https://parking.spb.ru/" target="_blank" rel="noopener">Парковки СПб</a>
+          <a href="https://whsd.ru/tarifyi-na-proezd/" target="_blank" rel="noopener">ЗСД</a>
+          <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open‑Meteo</a>
+        </div>
+        <div class="notice"><span>⚠️</span><div><strong>Важное уточнение</strong><p>Часы работы, сеансы и дорожная обстановка могут измениться. Сайт — персональный план, а не гарантия доступности билетов. Финально перепроверьте всё 12 июля и утром каждого дня.</p></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-grid"><div><strong>Путешествие в Санкт-Петербург</strong><p>13–18 июля 2026 · старт с Васильевского острова</p></div><button class="btn btn-primary" type="button" onclick="window.print()">Распечатать план</button></div>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector('.menu-btn');
+    const mainNav = document.querySelector('nav');
+    menuButton.addEventListener('click', () => {
+      const open = mainNav.classList.toggle('open');
+      menuButton.setAttribute('aria-expanded', String(open));
+    });
+    mainNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      mainNav.classList.remove('open');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }));
+
+    const dateTabs = [...document.querySelectorAll('.date-tab')];
+    const dayCards = [...document.querySelectorAll('.day-card')];
+    function showDay(dayId, shouldScroll = false) {
+      const nextTab = dateTabs.find(tab => tab.dataset.dayTarget === dayId) || dateTabs[0];
+      const nextCard = document.getElementById(nextTab.dataset.dayTarget);
+      dateTabs.forEach(tab => {
+        const active = tab === nextTab;
+        tab.classList.toggle('active', active);
+        tab.setAttribute('aria-selected', String(active));
+        tab.setAttribute('tabindex', active ? '0' : '-1');
+      });
+      dayCards.forEach(card => card.classList.toggle('active-day', card === nextCard));
+      nextCard.classList.add('open');
+      nextCard.querySelector('.day-top').setAttribute('aria-expanded', 'true');
+      try { history.replaceState(null, '', '#' + nextCard.id); } catch (_) {}
+      nextTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      if (shouldScroll && window.innerWidth < 900) {
+        setTimeout(() => nextCard.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
+      }
+    }
+    dateTabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => showDay(tab.dataset.dayTarget, true));
+      tab.addEventListener('keydown', event => {
+        if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+        event.preventDefault();
+        let next = index;
+        if (event.key === 'ArrowLeft') next = Math.max(0, index - 1);
+        if (event.key === 'ArrowRight') next = Math.min(dateTabs.length - 1, index + 1);
+        if (event.key === 'Home') next = 0;
+        if (event.key === 'End') next = dateTabs.length - 1;
+        dateTabs[next].focus();
+        showDay(dateTabs[next].dataset.dayTarget);
+      });
+    });
+    if (/^#day-(13|14|15|16|17|18)$/.test(location.hash)) showDay(location.hash.slice(1));
+
+    document.querySelectorAll('.day-top').forEach(top => {
+      const toggle = () => {
+        const card = top.closest('.day-card');
+        const open = card.classList.toggle('open');
+        top.setAttribute('aria-expanded', String(open));
+      };
+      top.addEventListener('click', event => {
+        if (!event.target.closest('a')) toggle();
+      });
+      top.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggle(); }
+      });
+    });
+
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => tab.addEventListener('click', () => {
+      tabs.forEach(item => { item.classList.remove('active'); item.setAttribute('aria-selected', 'false'); });
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    }));
+
+    document.querySelectorAll('[data-save]').forEach(box => {
+      try { box.checked = localStorage.getItem('spb-' + box.dataset.save) === '1'; } catch (_) {}
+      box.addEventListener('change', () => {
+        try { localStorage.setItem('spb-' + box.dataset.save, box.checked ? '1' : '0'); } catch (_) {}
+      });
+    });
+
+    const sections = [...document.querySelectorAll('main section[id]')];
+    const navLinks = [...mainNav.querySelectorAll('a')];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id));
+      });
+    }, { rootMargin: '-25% 0px -65% 0px' });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
